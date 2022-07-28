@@ -3,6 +3,7 @@
 #grep 'votes={' log_event_loop_1.log | tail -n 1 |cut -f 2 -d \{ | tr , "\n" | cut -f 2 -d ":" |uniq -c |tr -s [:blank:]
 #Pretty much spaghetti coded script to print the votings of both servers, temp fix for the fucking crashes
 #This is a totally ShitScript, you are warned
+#Change the LOG_DIR, WEBHOOK and the amount of servers in the for
 
 EXEC_DIR=$(dirname $0)
 EXEC_NAME=$(basename $0)
