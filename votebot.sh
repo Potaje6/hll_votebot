@@ -28,9 +28,9 @@ EOF
 exit
 }
 
-for i in 1 2 3
+for i in 1 2 3 4
 do
-	grep 'votes={' ${LOG_DIR}/log_event_loop_$i.log  | tail -n 1 |cut -f 2 -d \{ | tr , "\n" | cut -f 2 -d ":" |tr -s [:blank:] |sed 's/}//' | sed "s/'//g" | sort | uniq -c |sed 's/      //'|sort -n -r -k1 | sed ':a;N;$!ba;s/\n/, /g' |tr -s [:blank:] > ${EXEC_DIR}/Server$i.tmp
+	grep 'votes={' ${LOG_DIR}/log_event_loop_$i.log | tail -n 1 | sed 's/(id=/\n/g' | sed 1d | cut -f 1 -d "," | sort | uniq -c|sed 's/      //'|sort -n -r -k1 | sed ':a;N;$!ba;s/\n/, /g' |tr -s [:blank:] > ${EXEC_DIR}/Server$i.tmp
 	diff ${EXEC_DIR}/Server$i.tmp ${EXEC_DIR}/Server$i.vote > /dev/null 2>&1
 	if [ $? -ne 0 ]; then
 		mv ${EXEC_DIR}/Server${i}.tmp ${EXEC_DIR}/Server${i}.vote
